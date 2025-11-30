@@ -109,7 +109,7 @@ const PORT = process.env.PORT;
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📚 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`🔗 Health check: /api/health`);
 });
 
 // Handle unhandled promise rejections
