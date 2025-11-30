@@ -57,12 +57,9 @@ app.use('/api/snippets', snippets);
 
 // Health check route
 app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Server is running!',
-    timestamp: new Date().toISOString()
-  });
+  res.json({ success: true, message: 'Server is running!' });
 });
+
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -105,6 +102,11 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT;
+
+if (!PORT) {
+  throw new Error("🚨 PORT not defined in environment variables!");
+}
+
 
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
