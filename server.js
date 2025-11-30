@@ -108,24 +108,4 @@ if (!PORT) {
 }
 
 
-const server = app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📚 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔗 Health check: /api/health`);
-});
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
-  console.log('❌ Unhandled Rejection at:', promise, 'reason:', err);
-  server.close(() => {
-    process.exit(1);
-  });
-});
-
-// Handle SIGTERM gracefully
-process.on('SIGTERM', () => {
-  console.log('👋 SIGTERM received');
-  server.close(() => {
-    console.log('💤 Process terminated');
-  });
-});
+module.exports = app;
