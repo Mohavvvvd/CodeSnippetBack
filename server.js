@@ -107,5 +107,26 @@ if (!PORT) {
   throw new Error("🚨 PORT not defined in environment variables!");
 }
 
+const PORT = process.env.PORT || 5000;
 
-module.exports = app;
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📚 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.log('❌ Unhandled Rejection at:', promise, 'reason:', err);
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+// Handle SIGTERM gracefully
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM received');
+  server.close(() => {
+    console.log('💤 Process terminated');
+  });
+});
